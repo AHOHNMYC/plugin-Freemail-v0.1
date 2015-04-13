@@ -15,8 +15,8 @@
 	<property name="version.src" value="freemail/Version.java"/>
 	<property name="version.build" value="freemail/Version.class"/>
 
-	<property name="bcdist" value="lcrypto-jdk14-138"/>
 	<property name="freenet-cvs-snapshot.location" location="../fred/dist/freenet.jar"/>
+	<property name="bcprov.location" location="../fred/lib/bcprov-jdk15on-151.jar"/>
 
 	<exec executable="git"
 		failifexecutionfails="false"
@@ -36,31 +36,15 @@
 		</and>
 	</condition>
 
-	<target name="bouncycastle-check">
-		<available file="${deps}/${bcdist}" property="bouncycastle-dist.present" />
-		<available file="${build}/org/bouncycastle" property="bouncycastle-bin.present" />
+	<target name="bouncycastle-query">
+		<available file="${bcprov.location}" property="bcprov.present" />
+	</target>
+	
+	<target name="bouncycastle-check" depends="bouncycastle-query" unless="bcprov.present">
+		<fail message="Bouncycastle library not present, expected in ${bcprov.location}"/>
 	</target>
 
-	<target name="bouncycastle-fetch" depends="bouncycastle-check" unless="bouncycastle-dist.present">
-		<mkdir dir="${deps}" />
-		<get src="http://www.bouncycastle.org/download/${bcdist}.zip"
-		dest="${deps}/${bcdist}.zip"
-		verbose="true"
-		usetimestamp="true" />
-
-		<unzip src="${deps}/${bcdist}.zip" dest="${deps}" />
-	</target>
-
-	<target name="bouncycastle-compile" depends="bouncycastle-fetch" unless="bouncycastle-bin.present">
-		<mkdir dir="build" />
-		<javac srcdir="${deps}/${bcdist}/src" destdir="${build}" debug="on" optimize="on" source="1.6" target="1.6" nowarn="true">
-			<exclude name="**/test/*" />
-			<exclude name="org/bouncycastle/util/IPTest.java" />
-			<exclude name="org/bouncycastle/util/AllTests.java" />
-		</javac>
-	</target>
-
-	<target name="compile" depends="bouncycastle-compile">
+	<target name="compile" depends="bouncycastle-check">
 		<mkdir dir="${build}"/>
 
 		<tstamp/>
@@ -88,6 +72,7 @@
 			<classpath>
 				<pathelement location="${freenet-cvs-snapshot.location}"/>
 				<pathelement path="${main.lib}"/>
+				<pathelement location="${bcprov.location}"/>
 			</classpath>
 			<compilerarg value="-Xlint"/>
 		</javac>
