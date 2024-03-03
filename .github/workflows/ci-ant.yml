@@ -25,8 +25,8 @@ jobs:
         wget https://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/1.51/bcprov-jdk15on-1.51.jar -qO ../fred/lib/bcprov-jdk15on-151.jar
     - name: Build with Ant
       run: ant -noinput -buildfile build.xml
-    - name: Upload XMLLibrarian
+    - name: Upload Freemail v0.1
       uses: actions/upload-artifact@v4
       with:
-        name: plugin-XMLLibrarian
+        name: plugin-Freemail-v0.1
         path: dist/*
