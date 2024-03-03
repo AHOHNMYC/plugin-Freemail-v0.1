@@ -107,6 +107,7 @@
 				<pathelement location="${build}"/>
 				<pathelement location="${build-test}"/>
 				<pathelement location="${junit}"/>
+				<pathelement location="${bcprov.location}"/>
 				<pathelement path="${test.lib}"/>
 			</classpath>
 			<assertions><enable/></assertions>
