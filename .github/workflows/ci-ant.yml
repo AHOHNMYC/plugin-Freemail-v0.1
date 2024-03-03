@@ -22,7 +22,7 @@ jobs:
         sudo chown -R runner ../..
         mkdir -p ../fred/dist ../fred/lib
         wget https://github.com/hyphanet/fred/releases/download/build01497/freenet.jar -qO ../fred/dist/freenet.jar
-        wget https://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/1.51/bcprov-jdk15on-1.51.jar -qO ../fred/lib/bcprov-jdk15on-1.51.jar
+        wget https://repo1.maven.org/maven2/org/bouncycastle/bcprov-jdk15on/1.51/bcprov-jdk15on-1.51.jar -qO ../fred/lib/bcprov-jdk15on-151.jar
     - name: Build with Ant
       run: ant -noinput -buildfile build.xml
     - name: Upload XMLLibrarian
