@@ -14,6 +14,8 @@
 	<property name="deps" location="deps"/>
 	<property name="version.src" value="freemail/Version.java"/>
 	<property name="version.build" value="freemail/Version.class"/>
+	<property name="source-version" value="1.6"/>
+	<property name="target-version" value="1.6"/>
 
 	<property name="freenet-cvs-snapshot.location" location="../fred/dist/freenet.jar"/>
 	<property name="bcprov.location" location="../fred/lib/bcprov-jdk15on-151.jar"/>
@@ -58,7 +60,7 @@
 		<echo message="Updated build version to ${git.revision} in ${build}/${version.src}"/>
 
 		<!-- Compile the patched version file -->
-		<javac srcdir="${build}" destdir="${build}" debug="on" optimize="on" source="1.6" target="1.6">
+		<javac srcdir="${build}" destdir="${build}" debug="on" optimize="on" source="${source-version}" target="${target-version}" includeantruntime="false">
 			<include name="${version.src}"/>
 			<classpath>
 				<pathelement location="${freenet-cvs-snapshot.location}"/>
@@ -68,7 +70,7 @@
 
 		<!-- Bundle the whole lot together, unless anyone whinges.
 		     It makes it much easier to run -->
-		<javac srcdir="${src}" destdir="${build}" debug="on" optimize="on" source="1.6" target="1.6">
+		<javac srcdir="${src}" destdir="${build}" debug="on" optimize="on" source="${source-version}" target="${target-version}" includeantruntime="false">
 			<classpath>
 				<pathelement location="${freenet-cvs-snapshot.location}"/>
 				<pathelement path="${main.lib}"/>
@@ -86,7 +88,7 @@
 
 	<target name="unit-build" depends="compile" unless="${test.skip}">
 		<mkdir dir="${build-test}"/>
-		<javac srcdir="${test}" destdir="${build-test}" debug="on" optimize="on" source="1.5" target="1.5">
+		<javac srcdir="${test}" destdir="${build-test}" debug="on" optimize="on" source="${source-version}" target="${target-version}" includeantruntime="false">
 			<classpath>
 				<pathelement location="${freenet-cvs-snapshot.location}"/>
 				<pathelement location="${build}"/>
